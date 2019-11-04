@@ -48,7 +48,7 @@ public class ZookeeperTest implements Watcher {
          */
         String result = zk.create(path, "test".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
         // 异步创建 + 回调通知
-        zk.create(path + "async", "test".getBytes(),  ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL, new StringCallBackTest(), "传递数据");
+        zk.create(path + "async", "test".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL, new StringCallBackTest(), "传递数据");
 
         // 创建节点返回值：/javatest
         System.out.println("创建节点的路径：" + result);
