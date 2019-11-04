@@ -7,22 +7,20 @@ import java.time.Month;
 
 public class TestDate {
 
-	public static void main(String[] args) {
-		
-		//获取当前日期的0点
+    public static void main(String[] args) {
+
+        //获取当前日期的0点
 //		DateUtil.startOfDay(date, needTimePart)
-		
-		String startlocalday = DateUtil.startOfDayString(LocalDateTime.now());
-		System.out.println("当前日期：" + startlocalday);//2019-07-17 00:00:00
-		
-		System.out.println("当前日期前1天：" + DateUtil.beforeOfDayString(startlocalday, 1));
-		
-		
-		
-		
-		System.out.println("当前日期前2天：" + DateUtil.beforeOfDayString(startlocalday, 2));
-		
-		// 获取当前的日期时间
+
+        String startlocalday = DateUtil.startOfDayString(LocalDateTime.now());
+        System.out.println("当前日期：" + startlocalday);//2019-07-17 00:00:00
+
+        System.out.println("当前日期前1天：" + DateUtil.beforeOfDayString(startlocalday, 1));
+
+
+        System.out.println("当前日期前2天：" + DateUtil.beforeOfDayString(startlocalday, 2));
+
+        // 获取当前的日期时间
 //		LocalDateTime currentTime = LocalDateTime.now();
 //		System.out.println("当前时间: " + currentTime);
 //
@@ -49,7 +47,7 @@ public class TestDate {
 //		// 解析字符串
 //		LocalTime date5 = LocalTime.parse("20:15:30");
 //		System.out.println("date5: " + date5);
-		
-	}
+
+    }
 
 }

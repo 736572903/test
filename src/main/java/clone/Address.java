@@ -1,32 +1,32 @@
 package clone;
 
-public class Address implements Cloneable{
-	
-	private String name;
+public class Address implements Cloneable {
 
-	public String getName() {
-		return name;
-	}
+    private String name;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Address() {
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Address(String name) {
-		this.name = name;
-	}
+    public Address() {
+    }
 
-	@Override
-	public String toString() {
-		return "Address [name=" + name + "]";
-	}
-	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		 return super.clone();
-	}
-	
+    public Address(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Address [name=" + name + "]";
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

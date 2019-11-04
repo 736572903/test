@@ -1,5 +1,5 @@
 package netty.nio;
- 
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -11,22 +11,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
- 
+
 /**
- * 
- * 
  * 多路复用IO模型（JAVA NIO就是采用此模式）
- * 
  */
 public class NioServer {
     //通道通信
     private Selector selector;
-    
+
     /**
      * 获得一个ServerSocket通道，并对该通道做一些初始化的工作
+     *
      * @param port 绑定的端口号
      * @throws IOException
-     * */
+     */
     public void initServer(int port) throws IOException {
         //获得一个ServerSocket通道
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
@@ -39,52 +37,55 @@ public class NioServer {
         //将通道管理器和该通道绑定，并为该通道注册SelectionKey.OP_ACCEPT事件，注册该事件后，
         //当该事件到达时，selector.select()会返回，如果该事件没到达selector.select()会一直阻塞
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
-        
+
 //        List<Integer> list = new ArrayList<Integer>();
 //        list.add(1);
 //        serverChannel.register(selector, SelectionKey.OP_ACCEPT, list);
     }
-    
+
     /**
      * 采用轮询的方式监听selector是否有需要处理的事件，如果有，则进行处理
+     *
      * @throws IOException
-     * */
-    public void listen() throws IOException{
+     */
+    public void listen() throws IOException {
         System.out.println("服务端启动成功！");
         //轮询访问selector
-        while(true){
+        while (true) {
             //当注册的事件到达时，方法返回；否则，该方法会一直阻塞
             selector.select();
             //获得selector中选中的项的迭代器，选中的项为注册的事件
             Iterator<?> ite = this.selector.selectedKeys().iterator();
-            while(ite.hasNext()){
-                SelectionKey key = (SelectionKey)ite.next();
+            while (ite.hasNext()) {
+                SelectionKey key = (SelectionKey) ite.next();
                 //删除已选的key，以防重复处理
                 ite.remove();
                 handler(key);
             }
         }
     }
-    
+
     /**
      * 处理请求
+     *
      * @param key
      * @throws IOException
-     * */
-    private void handler(SelectionKey key) throws IOException{
-        if(key.isAcceptable()){//客户端请求连接事件
+     */
+    private void handler(SelectionKey key) throws IOException {
+        if (key.isAcceptable()) {//客户端请求连接事件
             handlerAccept(key);
-        }else if(key.isReadable()){//获得了可读的事件
+        } else if (key.isReadable()) {//获得了可读的事件
             handlerRead(key);
         }
     }
- 
- 
+
+
     /**
      * 处理连接请求
+     *
      * @param key
      * @throws IOException
-     * */
+     */
     private void handlerAccept(SelectionKey key) throws IOException {
         //获得ServerSocket
         ServerSocketChannel server = (ServerSocketChannel) key.channel();
@@ -92,28 +93,29 @@ public class NioServer {
         SocketChannel channel = server.accept();
         //设置成非阻塞
         channel.configureBlocking(false);
-        
+
 //        List<Integer> list = (List<Integer>)key.attachment();
 //        System.out.println("accept:"+list.size());
 //        list.add(2);
 //        key.attach(list);
-        
+
         System.out.println("新的客户端连接");
         //服务端发给客户端的确认信息
         channel.write(ByteBuffer.wrap("服务端成功创建连接".getBytes()));
         //在和客户端连接成功后，为了可以接收到客户端的信息，需要给通道设置读的权限
         channel.register(this.selector, SelectionKey.OP_READ);
-        
+
 //        channel.register(this.selector, SelectionKey.OP_READ, list);
-        
+
     }
- 
- 
+
+
     /**
      * 处理可读的事件
+     *
      * @param key
      * @throws IOException
-     * */
+     */
     private void handlerRead(SelectionKey key) throws IOException {
         //得到事件发生的Socket通道
         SocketChannel channel = (SocketChannel) key.channel();
@@ -122,21 +124,22 @@ public class NioServer {
         channel.read(buffer);
         byte[] data = buffer.array();
         String msg = new String(data).trim();
-        System.out.println("服务端收到信息："+msg);
-        
+        System.out.println("服务端收到信息：" + msg);
+
         buffer.hasRemaining();
-        
+
 //        List<Integer> list = (List<Integer>)key.attachment();
 //        System.out.println(list.size());
-        
-        ByteBuffer outBuffer = ByteBuffer.wrap(("服务端收到信息："+msg).getBytes());
+
+        ByteBuffer outBuffer = ByteBuffer.wrap(("服务端收到信息：" + msg).getBytes());
         channel.write(outBuffer);//将消息送回给客户端
     }
-    
+
     /**
      * 启动服务测试
+     *
      * @throws IOException
-     * */
+     */
     public static void main(String[] args) throws IOException {
         NioServer server = new NioServer();
         server.initServer(8888);

@@ -23,15 +23,15 @@ public class TestFuture {
         List<Object> list = new ArrayList<Object>();
         ExecutorService es = Executors.newFixedThreadPool(100);
         long time1 = System.currentTimeMillis();
-        for(int i=0; i<100;i++){
+        for (int i = 0; i < 100; i++) {
             results.add(es.submit(new Task()));
-        	
+
 //        	list.add(es.submit(new Task()).get());
         }
 //        System.out.println(list.get(10)+"");
         System.out.println(System.currentTimeMillis() - time1);
         //调用get方法，当前线程就开始阻塞，这个地方就是main线程开始阻塞，直到获得线程的返回值
-        for(Future<String> res : results){
+        for (Future<String> res : results) {
             System.out.println(res.get());
         }
         System.out.println("结束");

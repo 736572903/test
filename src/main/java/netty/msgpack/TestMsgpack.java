@@ -1,4 +1,4 @@
- package netty.msgpack;
+package netty.msgpack;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,20 +16,20 @@ import org.msgpack.template.Templates;
 public class TestMsgpack {
 
     public static void main(String[] args) throws IOException {
-        
+
         List<String> list = new ArrayList<String>();
         list.add("msgpack");
         list.add("kumofs");
         list.add("viver");
-        
+
         MessagePack msgPack = new MessagePack();
-        
+
         byte[] raw = msgPack.write(list);
-        
+
         List<String> dst = msgPack.read(raw, Templates.tList(Templates.TString));
-        
+
         System.out.println(dst.get(0));
-        
+
     }
 
 }

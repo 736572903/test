@@ -8,23 +8,23 @@ import entity.Student;
 
 /**
  * Optional 类是一个可以为null的容器对象。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象。
- * 
+ * <p>
  * Optional 是个容器：它可以保存类型T的值，或者仅仅保存null。Optional提供很多有用的方法，这样我们就不用显式进行空值检测。
- * 
+ * <p>
  * Optional 类的引入很好的解决空指针异常。
  */
 public class TestOptional {
 
-	public static void main(String[] args) {
-		
-		List<Student> list = null;
-		
-		Optional<List<Student>> optional = Optional.ofNullable(list);
-		
+    public static void main(String[] args) {
+
+        List<Student> list = null;
+
+        Optional<List<Student>> optional = Optional.ofNullable(list);
+
         Student s = optional.filter(u -> u.size() > 0).map(u -> u.get(0)).orElse(null);
-		System.out.println(s);
-		System.out.println(Optional.ofNullable(list).map(bill -> bill.size()).orElse(0));
-		
+        System.out.println(s);
+        System.out.println(Optional.ofNullable(list).map(bill -> bill.size()).orElse(0));
+
 //		TestOptional optional = new TestOptional();
 //
 //		Integer value1 = null;
@@ -37,21 +37,21 @@ public class TestOptional {
 //		Optional<Integer> b = Optional.of(value2);
 //		System.out.println(optional.sum(a, b));
 
-	}
-	
-	public Integer sum(Optional<Integer> a, Optional<Integer> b) {
+    }
 
-		// Optional.isPresent - 判断值是否存在
+    public Integer sum(Optional<Integer> a, Optional<Integer> b) {
 
-		System.out.println("第一个参数值存在: " + a.isPresent());
-		System.out.println("第二个参数值存在: " + b.isPresent());
+        // Optional.isPresent - 判断值是否存在
 
-		// Optional.orElse - 如果值存在，返回它，否则返回默认值
-		Integer value1 = a.orElse(new Integer(0));
+        System.out.println("第一个参数值存在: " + a.isPresent());
+        System.out.println("第二个参数值存在: " + b.isPresent());
 
-		// Optional.get - 获取值，值需要存在
-		Integer value2 = b.get();
-		return value1 + value2;
-	}
+        // Optional.orElse - 如果值存在，返回它，否则返回默认值
+        Integer value1 = a.orElse(new Integer(0));
+
+        // Optional.get - 获取值，值需要存在
+        Integer value2 = b.get();
+        return value1 + value2;
+    }
 
 }

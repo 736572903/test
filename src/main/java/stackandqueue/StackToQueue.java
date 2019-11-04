@@ -3,50 +3,50 @@ package stackandqueue;
 import java.util.Stack;
 
 /**
- * Á½¸öÕ»ÊµÏÖ¶ÓÁÐ
- * @author RYX
+ * ï¿½ï¿½ï¿½ï¿½Õ»Êµï¿½Ö¶ï¿½ï¿½ï¿½
  *
+ * @author RYX
  */
 public class StackToQueue {
-	
-	static Stack<String> stack1 = new Stack<String>();
-	
-	static Stack<String> stack2 = new Stack<String>();
 
-	public static void main(String[] args) {
-		
-		push("1");
-		push("2");
-		push("3");
-		push("4");
-		push("5");
-		
-		System.out.println(pop());
-		System.out.println(pop());
-		System.out.println(pop());
-		System.out.println(pop());
-		System.out.println(pop());
-		System.out.println(pop());
-		
+    static Stack<String> stack1 = new Stack<String>();
 
-	}
-	
-	public static void push(String name){
-		stack1.add(name);
-	}
-	
-	public static String pop(){
-		
-		while(stack1.size() > 0){
-			String name = stack1.pop();
-			stack2.add(name);
-		}
-		if(stack2.size() > 0){
-			return stack2.pop();
-		}
-		
-		return null;
-		
-	}
-	
+    static Stack<String> stack2 = new Stack<String>();
+
+    public static void main(String[] args) {
+
+        push("1");
+        push("2");
+        push("3");
+        push("4");
+        push("5");
+
+        System.out.println(pop());
+        System.out.println(pop());
+        System.out.println(pop());
+        System.out.println(pop());
+        System.out.println(pop());
+        System.out.println(pop());
+
+
+    }
+
+    public static void push(String name) {
+        stack1.add(name);
+    }
+
+    public static String pop() {
+
+        while (stack1.size() > 0) {
+            String name = stack1.pop();
+            stack2.add(name);
+        }
+        if (stack2.size() > 0) {
+            return stack2.pop();
+        }
+
+        return null;
+
+    }
+
 }

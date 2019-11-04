@@ -14,9 +14,10 @@ public class HashMapNoSafe {
      * 也就是map中总共有10 * 10 = 100 条数据
      */
     public static final int NUMBER = 10;
+
     public static void main(String[] args) throws InterruptedException {
-    	
-    	//hashMap的put方法会导致数据丢失
+
+        //hashMap的put方法会导致数据丢失
         Map<String, String> map = new ConcurrentHashMap<String, String>(2);
 
         for (int i = 0; i < NUMBER; i++) {
@@ -40,7 +41,7 @@ class A implements Runnable {
     public A(Map<String, String> map) {
         this.map = map;
     }
-    
+
     public void run() {
         for (int i = 0; i < HashMapNoSafe.NUMBER; i++) {
             map.put(i + "  " + Thread.currentThread().getName(), "test");

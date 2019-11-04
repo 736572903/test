@@ -1,4 +1,4 @@
- package netty.nio;
+package netty.nio;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,27 +13,27 @@ import java.util.Scanner;
 public class SocketClient2 {
 
     public static void main(String[] args) {
-        
+
         String host = "127.0.0.1";
-        
+
         int port = 8888;
-        
+
         try {
             Socket socket = new Socket(host, port);
-            
+
             OutputStream outputStream = socket.getOutputStream();
-            
+
             while (true) {
                 System.out.println("Client2端请输入：");
                 Scanner scanner = new Scanner(System.in);
                 String str = scanner.next();
                 outputStream.write(str.getBytes("UTF-8"));
-                
+
 //                ObjectOutputStream os  = new ObjectOutputStream(socket.getOutputStream());  
 //                List<String> list = new ArrayList<String>();
 //                os.writeObject(null);
 //                os.flush();
-                
+
 //                InputStream inputStream = socket.getInputStream();
 //                byte[] bytes = new byte[1024]; 
 //                int read = 0;
@@ -42,11 +42,11 @@ public class SocketClient2 {
 //                    System.out.println("从服务端获取消息："+new String(bytes, 0, read, "UTF-8"));
 //                }
             }
-            
+
         } catch (UnknownHostException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         } catch (IOException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         }
 
     }

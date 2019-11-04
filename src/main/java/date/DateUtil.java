@@ -20,8 +20,8 @@ public class DateUtil {
 
 
     private static final String TIME_SUBFIX = " 00:00:00";
-    
-    
+
+
     /**
      * 返回格式化的当前日期的0点0分
      *
@@ -29,33 +29,31 @@ public class DateUtil {
      * @return String
      */
     public static String startOfDayString(LocalDateTime date) {
-    	return DATE_FORMATTER.format(date) + TIME_SUBFIX;
+        return DATE_FORMATTER.format(date) + TIME_SUBFIX;
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
 //        return formatter.format(date);
     }
-    
+
     /**
-     * 
      * @param 日期yyyy-MM-dd HH:mm:ss的格式
      * @param 当前日期的前几天，天数
      * @return 返回LocalDateTime
      */
     public static LocalDateTime beforeOfDay(String datetime, int days) {
-    	LocalDateTime dateTime = LocalDateTime.parse(datetime, TIME_FORMATTER);
+        LocalDateTime dateTime = LocalDateTime.parse(datetime, TIME_FORMATTER);
         return dateTime.minus(Period.ofDays(days));
-	}
-    
+    }
+
     /**
-     * 
      * @param 日期yyyy-MM-dd HH:mm:ss的格式
      * @param 当前日期的前几天，天数
      * @return 返回String
      */
     public static String beforeOfDayString(String datetime, int days) {
-    	LocalDateTime dateTime = LocalDateTime.parse(datetime, TIME_FORMATTER);
+        LocalDateTime dateTime = LocalDateTime.parse(datetime, TIME_FORMATTER);
         return TIME_FORMATTER.format(dateTime.minus(Period.ofDays(days)));
-	}
-    
+    }
+
     /**
      * 按传入的格式 返回格式化的当前日期
      *

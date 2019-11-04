@@ -7,25 +7,25 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class HandlerThread implements Runnable {
-    
+
     private Socket socket;
-    
-    
-    public HandlerThread(){
-        
+
+
+    public HandlerThread() {
+
     }
-    
-    public HandlerThread(Socket socket){
+
+    public HandlerThread(Socket socket) {
         this.socket = socket;
     }
 
     public void run() {
-        
-        byte[] bytes = new byte[1024]; 
-        
+
+        byte[] bytes = new byte[1024];
+
         try {
             InputStream inputStream = socket.getInputStream();
-            
+
 //            int len =0;
 //            StringBuilder sb = new StringBuilder();
 //            while ((len = inputStream.read(bytes)) != -1) {
@@ -33,19 +33,19 @@ public class HandlerThread implements Runnable {
 //                sb.append(new String(bytes, 0, len, "UTF-8"));
 //                System.out.println("从客户端获取消息："+sb.toString());
 //            }
-           
-            
+
+
             int read = 0;
-            while(read != -1){
+            while (read != -1) {
                 /**
                  * This method blocks until input data is
                  * available, end of file is detected, or an exception is thrown.
                  * 一直阻塞直到收到消息或者出现异常
                  */
                 read = inputStream.read(bytes);
-                System.out.println("从客户端获取消息："+new String(bytes, 0, read, "UTF-8"));
+                System.out.println("从客户端获取消息：" + new String(bytes, 0, read, "UTF-8"));
             }
-            
+
 //            ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));  
 //            try {
 //                Object obj = is.readObject();
@@ -53,22 +53,22 @@ public class HandlerThread implements Runnable {
 //            } catch (ClassNotFoundException e) {
 //                 e.printStackTrace();
 //            }  
-            
-            
+
+
             inputStream.close();
-            
+
         } catch (IOException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         } finally {
-            if(socket != null){
+            if (socket != null) {
                 try {
                     socket.close();
                 } catch (IOException e) {
-                     e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         }
-        
+
 
     }
 

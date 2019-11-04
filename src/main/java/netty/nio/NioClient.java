@@ -1,5 +1,5 @@
 package netty.nio;
- 
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -8,7 +8,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
- 
+
 /**
  * client实例代码
  *
@@ -18,26 +18,26 @@ import java.util.Set;
 public class NioClient {
     // 通道管理器(Selector)
     private static Selector selector;
- 
+
     public static void main(String[] args) throws IOException {
         // 创建通道管理器(Selector)
         selector = Selector.open();
- 
+
         // 创建通道SocketChannel
         SocketChannel channel = SocketChannel.open();
         // 将通道设置为非阻塞
         channel.configureBlocking(false);
- 
+
         // 客户端连接服务器，其实方法执行并没有实现连接，需要在handleConnect方法中调channel.finishConnect()才能完成连接
         channel.connect(new InetSocketAddress("localhost", 8888));
- 
+
         /**
          * 将通道(Channel)注册到通道管理器(Selector)，并为该通道注册selectionKey.OP_CONNECT
          * 注册该事件后，当事件到达的时候，selector.select()会返回，
          * 如果事件没有到达selector.select()会一直阻塞。
          */
         channel.register(selector, SelectionKey.OP_CONNECT);
- 
+
         // 循环处理
         while (true) {
             /*
@@ -46,30 +46,30 @@ public class NioClient {
              * 这里和服务端的方法不一样，查看api注释可以知道，当至少一个通道被选中时。
              */
             selector.select();
- 
+
             // 获取监听事件
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
             Iterator<SelectionKey> iterator = selectionKeys.iterator();
- 
+
             // 迭代处理
             while (iterator.hasNext()) {
                 // 获取事件
                 SelectionKey key = iterator.next();
- 
+
                 // 移除事件，避免重复处理
                 iterator.remove();
- 
+
                 // 连接事件发生
                 if (key.isConnectable()) {
                     handleConnect(key);
                 } else if (key.isReadable()) {// 监听到读事件，对读事件进行处理
                     handleRead(key);
                 }
- 
+
             }
         }
     }
- 
+
     /**
      * 处理客户端连接服务端成功事件
      */
@@ -80,26 +80,26 @@ public class NioClient {
             // channel.finishConnect()才能完成连接
             channel.finishConnect();
         }
- 
+
         channel.configureBlocking(false);
- 
+
         // 数据写入通道
         channel.write(ByteBuffer.wrap(new String("Hello Server!").getBytes()));
- 
+
         // 通道注册到选择器，并且这个通道只对读事件感兴趣
         channel.register(selector, SelectionKey.OP_READ);
     }
- 
+
     /**
      * 监听到读事件，读取客户端发送过来的消息
      */
     private static void handleRead(SelectionKey key) throws IOException {
         SocketChannel channel = (SocketChannel) key.channel();
- 
+
         // 从通道读取数据到缓冲区
         ByteBuffer buffer = ByteBuffer.allocate(128);
         channel.read(buffer);
- 
+
         // 输出服务端响应发送过来的消息
         byte[] data = buffer.array();
         String msg = new String(data).trim();
