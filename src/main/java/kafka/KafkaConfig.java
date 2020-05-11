@@ -65,7 +65,6 @@ public class KafkaConfig {
         Properties props = new Properties();
 
         props.put("zookeeper.connect", "192.168.0.117:2181,192.168.0.118:2181,192.168.0.119:2181");
-
         // group 代表一个消费组
         props.put("group.id", getString("kafka.group.id"));
 

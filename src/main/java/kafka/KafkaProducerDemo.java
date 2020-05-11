@@ -60,7 +60,7 @@ public class KafkaProducerDemo {
         while (it.hasNext()) {
             MessageAndMetadata<String, String> mam = it.next();
             System.out.println("消息:" + mam.message() + ",偏移量：" + mam.offset());
-//			consumer.commitOffsets();//生效！！！！！！！！！！！！！
+			consumer.commitOffsets();
         }
 
     }
@@ -86,16 +86,16 @@ public class KafkaProducerDemo {
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(props);
 
         // 默认异步
-//        Future<RecordMetadata> future = producer.send(new ProducerRecord<String, String>(topic, message));
+        Future<RecordMetadata> future = producer.send(new ProducerRecord<>(topic, message));
 
-//        try {
+        try {
 //        	//get同步sync阻塞，ack生效
-//			System.out.println(future.get().offset());
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} catch (ExecutionException e) {
-//			e.printStackTrace();
-//		}
+			System.out.println(future.get().offset());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
         //异步通知如果失败可以存储，等定时任务去重新发送，保证异步发送的消息不丢失
         //异步非阻塞
         producer.send(new ProducerRecord<String, String>(topic, message), new Callback() {

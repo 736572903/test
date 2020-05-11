@@ -35,11 +35,11 @@
 
 
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>5.0.0.Alpha1</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.msgpack</groupId>
@@ -88,16 +88,37 @@
             </exclusions>
         </dependency>
 
+        <!--<dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.12</artifactId>
+            <version>1.0.0</version>
+        </dependency>-->
+
+        <!--<dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            &lt;!&ndash;<version>0.8.2.2</version>&ndash;&gt;
+            <version>1.0.0</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>0.8.2.2</version>
+            <version>0.10.0.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.3.6</version>
+            <version>3.4.6</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.jms</groupId>
@@ -132,6 +153,22 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!--Versions
+            The are currently two released versions of Curator, 2.x.x and 3.x.x:
+            Curator 2.x.x - compatible with both ZooKeeper 3.4.x and ZooKeeper 3.5.x
+            Curator 3.x.x - compatible only with ZooKeeper 3.5.x and includes support for new features such as dynamic reconfiguration, etc.-->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>

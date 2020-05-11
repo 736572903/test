@@ -37,7 +37,7 @@ public class ChildChannelHandler extends ChannelInitializer<Channel> {
         //字符编码 UTF-8
         ch.pipeline().addLast(new StringDecoder());
 
-        ch.pipeline().addLast(new TimeServerHandler());
+//        ch.pipeline().addLast(new TimeServerHandler());
 
     }
 

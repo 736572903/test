@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ZookeeperTest implements Watcher {
 
-    private static ZooKeeper zk = null;
+    private static ZooKeeper zk;
     private static Stat stat = new Stat();
 
     private static CountDownLatch connectedSemaphore = new CountDownLatch(1);
@@ -57,12 +57,14 @@ public class ZookeeperTest implements Watcher {
         System.out.println("获取节点的数据" + new String(zk.getData(path, true, stat)));
 
         // 设置新值
-        zk.setData(path, "newTest".getBytes(), stat.getVersion());
-
+        Stat stat1 = zk.setData(path, "newTest".getBytes(), -1);
+        System.out.println("获取权限:"+zk.getACL(path, stat1).get(0).toString()+":"+zk.getACL(path, stat1).size());
+        Stat stat2 = zk.setData(path, "newTest1".getBytes(), -1);
         // 删除节点
-        zk.delete(path, stat.getVersion() + 1);
+        zk.delete(path, stat1.getVersion());
 
-        Thread.sleep(Integer.MAX_VALUE);
+//        Thread.sleep(Integer.MAX_VALUE);
+        zk.close();
     }
 
 
